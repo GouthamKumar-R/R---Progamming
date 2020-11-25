@@ -1,0 +1,12 @@
+Module 1  -> 25th Nov 2020
+
+Since this is the very first module, we will start with very basic things like how R can be used as a calculator, what is a variable and introduce a very important data structure named ‘vector’. As you progress through the course you will see how the understanding of variables and vectors will help you to answer some primary questions about the data we are analysing, e.g. What is the highest value of the MPG? Which car has the highest MPG? Which car is the lightest? What is the average weight of cars having four cylinders? Etc.
+
+Topics covered:
+1. R as a Calculator
+2. Introduction to Variable
+3. Introduction to Vector
+4. Vector Subsetting
+5. Conditional Subsetting of Vectors
+6. Vector in Data
+7. Information Extraction
