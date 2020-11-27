@@ -185,65 +185,61 @@ y[(x == 45)]
 #A variable in data can be extracted as follows:
 
 
+View(cars)
 
+cars$MPG
 
+mean(cars$MPG)
 
-
-
-
-
-
-
-
+summary(cars$MPG)
 
 
 #PROBLEM (Reference: cars.csv)
 
 # a. Which car has the highest mpg?
 
-
+cars$Car[cars$MPG ==max(cars$MPG)]
 
 # b. Which car is the heaviest?
 
-
+cars$Car[cars$Weight ==max(cars$Weight)]
 
 # c. Which car is the lightest?
 
-
+cars$Car[cars$Weight == min(cars$Weight)]
 
 # d. Which car has the highest value of the horsepower?
 
-
-
+cars$Car[cars$Horsepower == max(cars$Horsepower)]
 # e. What is the lowest value of the horsepower?
 
-
+min(cars$Horsepower)
 
 # f. What is the highest values of the mpg?
 
-
+max(cars$MPG)
 
 # g. List the top 10 percentile values of mpg.
 
-
+quantile(cars$MPG,seq(0.9,0.99,0.01))
 
 # h. List the name of cars which has mileage between 25 and 35 mpg.
 
-
+cars$Car[(cars$MPG>25 & cars$MPG <35)]
 
 # i. What is the average weight of the cars which has 8 cylinders?
 
-
+mean(cars$Weight[cars$Cylinders==8])
 
 # j. What is the average weight of the cars that are originated in Japan?
 
-
+mean(cars$Weight[cars$Origin == 'Japan'])
 
 # k. Randomly select 20 cars from the given list of cars.
 
+cars[sample(nrow(cars),20),]#if u want to return full df
 
-
-
+sample(cars$Car,20) #if u want only one col
 
 
 
