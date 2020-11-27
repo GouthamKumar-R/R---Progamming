@@ -1,0 +1,11 @@
+I2R  - 27th Nov
+
+In this module, we will focus on data structures that contains rows and columns, particularly the matrix and the data frame. We will discuss the similarities and the differences between the two. We will talk about how to perform matrix operations and how to extract information from a matrix or a data frame. As you progress through the course you will see how to the understandings of these two very important data structure can help you to search through the data. E.g. You will be able to retrieve information of all the cars originating from Europe and has MPG more than 40, or information of all cars with horsepower more than 200, etc.
+
+Topics covered:
+1. Introduction to Matrix
+2. Matrix Operations
+3. Matrix and Data Frame
+4. Matrix Subsetting
+5. Data Subsetting – Information Retrieval
+6. The subset() function
