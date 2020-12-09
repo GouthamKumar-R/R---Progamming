@@ -1,0 +1,12 @@
+I2R 
+Module 3 - Descriptive Statistics
+
+In this module we will discuss different ways by which we can describe the variables present in the data and their inter-relationships both visually and by calculating appropriate statistics. We will start by analysing a single variable and go on to perform bivariate analysis between two numerical variables, two categorical variables and a numerical variable over a categorical variable. You will be able to answer questions like, on average which origin (Europe, Japan or US) manufactures light weight cars? Why do MPG of cars decrease on average as weight of the cars increase? Why do US manufactures heavier cars? Etc.
+
+Topics covered:
+1. The summary() function and the by() function
+2. Frequency tables and the table of proportions
+3. Histogram
+4. Boxplots
+5. Bar Charts
+6. Scatter Plots and Pairwise Scatterplots
