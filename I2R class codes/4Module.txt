@@ -1,0 +1,9 @@
+Module 4: Data Manipulation
+
+Sometimes we need to manipulate the variables present in our data. Examples include converting the data types of a variables, sorting and ordering the data by one or more variable/s, transforming a variable on a different scale to achieve linearity, creating a new variable derived from another variable, etc. In this module we will discuss these and talk about the purpose of doing such manipulations. You will be able to sort the cars by the decreasing (or increasing) order of their MPG (or by any other characteristics), you will be able to perform multi-variable sorting, you will understand the challenges that you may face while transforming a variable to a different scale like logarithm scale and create categorical variables based on a numerical variable.
+
+Topics covered:
+1. Class and Class Conversion
+2. Sort and Order
+3. Data Transformation
+4. The ifelse() function
