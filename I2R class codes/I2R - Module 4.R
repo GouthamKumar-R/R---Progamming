@@ -128,31 +128,35 @@ cor(log(cars$MPG[cars$MPG!=0 & cars$Horsepower!=0]), log(cars$Horsepower[cars$MP
 # IF Horsepower < 100 THEN "Low HP"
 # IF Horsepower >= 100 THEN "High HP"
 
+View(cars)
+cars$HP = NA #initalising a variable with null values
 
-
-
-
+cars$HP = ifelse(cars$Horsepower < 100, "Low HP", "High HP")
+View(cars)
 
 
 #PROBLEM 2:
 # Create a Variable MPG_Rate which will take on the values as follows:
 # IF MPG < 15 THEN "Normal"
 # IF MPG >= 15 AND MPG <=25 THEN "GOOD"
-# IF MPG >= 25 AND MPG <=35 THEN "GREAT"
-# IF MPG >= 35 THEN "AWESOME"
+# IF MPG > 25 AND MPG <=35 THEN "GREAT"
+# IF MPG > 35 THEN "AWESOME"
 
 
-
-
-
+cars$MPG_Rate = NA
+cars$MPG_Rate = ifelse(cars$MPG < 15, "Normal",
+                       ifelse(cars$MPG <=25,"Good",
+                              ifelse(cars$MPG <=35,"Great","Awesome")))
+View(cars)
 
 
 #=======================================================================================================
 #6. SQL in R
 #=======================================================================================================
 
-
+install.packages('sqldf')
 require(sqldf)
+View(mtcars)
 
 sqldf('SELECT * from mtcars')
 sqldf('select mpg from mtcars')
@@ -162,9 +166,5 @@ sqldf('select mpg, wt from mtcars order by mpg')
 sqldf('select am, avg(mpg) as avg_mpg from mtcars group by am')
 sqldf('select am, avg(mpg) as avg_mpg from mtcars group by am')
 sqldf('select am, avg(mpg), stdev(mpg) from mtcars group by am')
-
-
-
-
 
 

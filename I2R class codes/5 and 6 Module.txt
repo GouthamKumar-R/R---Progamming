@@ -1,0 +1,19 @@
+Module 5: Missing Value Imputation
+
+Missing values are unrecorded or unreported values. In this module we will discuss what problems we may face when our data contain missing values. You will learn various techniques to deal with missing values and learn techniques to fill in the missing values.
+
+Topics covered:
+1. Handling variables with missing values
+2. Imputation using mean or median
+3. K-NN Imputation
+4. Imputation using deductive logic
+
+
+Module 6: Outlier Analysis
+
+Outliers are observations that are far from the usual distribution of the data. In this module we will discuss the various causes of outliers and the ways to diagnose them. You will also learn how to remove or cap outliers.
+Topics Covered:
+1. Outlier diagnosis
+2. Trimming outlier
+3. Capping outlier – Winsorization
+4. Correcting outliers using Variable Transformation
