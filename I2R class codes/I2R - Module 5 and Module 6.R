@@ -124,6 +124,78 @@ View(fram_impute)
 
 #NOTE: KNN IMPUTATION CAN ALSO IMPUTE NUMERICAL VARIABLES
 
+
+#=======================================================================================================
+## Imputing Numerical variable- CigsPerDay
+
+fram <- read.csv("framingham.csv")
+View(fram)
+str(fram)
+summary(fram)
+#there are 29 missing values in the variable "cigsPerDay"
+
+
+##Statistical Imputation
+#lets look at the distibution of the variable
+hist(fram$cigsPerDay)
+#positively(right) skewed => Mean imputation is not right
+
+
+#Median Imputation
+fram_median <- fram #taking a copy of fram
+View(fram_median)
+
+median(fram_median$cigsPerDay) #will return NA/ coz its nt py
+
+fram_median$cigsPerDay[is.na(fram_median$cigsPerDay)] = median(fram_median$cigsPerDay[!is.na(fram_median$cigsPerDay)])
+
+summary(fram_median)
+hist(fram_median$cigsPerDay)
+#---------------------------------------------------------------
+
+#knn imputation for numerical missing value
+install.packages("VIM")
+library(VIM)
+?kNN
+
+fram_knn <- fram #copy of df
+
+fram_knn_updated <- kNN(fram_knn, variable = "cigsPerDay", k=5)
+
+#before imputing
+summary(fram)
+#after imputation
+summary(fram_knn_updated)
+# we can see some new variables cigsperDay_imp, this was used by knn to update the missing value
+#lets drop those
+
+fram_knn_updated <- subset(fram_knn_updated, select = male:TenYearCHD)
+summary(fram_knn_updated)
+
+
+#--------------------------------
+###R-Part
+http://r-statistics.co/Missing-Value-Treatment-With-R.html
+
+fram_rpart <- fram  #copy of df
+
+#anova_mod <- rpart(ptratio ~ . - medv, data=BostonHousing[!is.na(BostonHousing$ptratio), ], method="anova", na.action=na.omit)
+
+#work under progress
+mod <- rpart(cigsPerDay ~ . - , data=fram_rpart[!is.na(fram_median$cigsPerDay), ], method="anova", na.action=na.omit)
+
+?rpart
+
+
+
+
+
+
+
+
+
+
+
 #=======================================================================================================
 #7. OUTLIERS - OUTLIERS IDENTIFICATION
 #=======================================================================================================
