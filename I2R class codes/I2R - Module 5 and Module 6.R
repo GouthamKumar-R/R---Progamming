@@ -175,26 +175,91 @@ summary(fram_knn_updated)
 
 #--------------------------------
 ###R-Part
-http://r-statistics.co/Missing-Value-Treatment-With-R.html
-
+# http://r-statistics.co/Missing-Value-Treatment-With-R.html
+#install.packages('rpart')
+?rpart
+library(rpart)
 fram_rpart <- fram  #copy of df
 
 #anova_mod <- rpart(ptratio ~ . - medv, data=BostonHousing[!is.na(BostonHousing$ptratio), ], method="anova", na.action=na.omit)
 
 #work under progress
-mod <- rpart(cigsPerDay ~ . - , data=fram_rpart[!is.na(fram_median$cigsPerDay), ], method="anova", na.action=na.omit)
+mod <- rpart(cigsPerDay ~ currentSmoker , data=fram_rpart[!is.na(fram$cigsPerDay), ], method="anova", na.action=na.omit)
+predx <- predict(mod, fram_rpart[is.na(fram$cigsPerDay), ])
 
-?rpart
+predx
+
+fram_rpart$cigsPerDay[is.na(fram_rpart$cigsPerDay)] <- predx
+
+summary(fram_rpart$cigsPerDay)
+
+hist(fram_rpart$cigsPerDay)
 
 
 
+#---------------------------------------------------------------
+#solution by sir
 
+View(fram)
+summary(fram$cigsPerDay)
+hist(fram$cigsPerDay)
+#more than 50% of our obs are non smoker- 0 cigs perday
 
+#problem we may face if we dont pay attention
+#problems with global mean
+#1. The people who are nonsmokers their corresponding values for cigsperdayt would be inappropriate
+#
+#2. The estimates missing values for the smokers will be inncorrect
+##
+by (fram$cigsPerDay, fram$currentSmoker, summary)
+#on avg, smokers smoke 18.36 cigs per day 
 
+#problems with global median
+#the imputed values corresponding to smokers cannot be zero
 
+#better approach- using conditional mean
+#Impute the missing values of cigsperdday for non smokers as 0
+#impute the Na values of smokers with mean-> 18.36 or median(20.0) which we got from grouby sumnary
 
+fram_cp <- fram
+#non smoker
+fram_cp$cigsPerDay[is.na(fram_cp$cigsPerDay) & fram_cp$currentSmoker==0] = 0
+#smoker
+fram_cp$cigsPerDay[is.na(fram_cp$cigsPerDay) & fram_cp$currentSmoker==1] = mean(fram_cp$cigsPerDay[!is.na(fram_cp$cigsPerDay) & fram_cp$currentSmoker==1] )
 
+summary(fram_cp$cigsPerDay)
+fram_cp$cigsPerDay
 
+#checking the results got via rpart and conditional mean are same
+all(fram_cp$cigsPerDay == fram_rpart$cigsPerDay)
+
+#linear regression model
+#y = cigsperday
+#x= current smoker
+fram_cp2 <- fram
+
+linRegModel = lm(cigsPerDay ~ currentSmoker, data=fram_cp2)
+linRegModel
+
+#cigsperday(y) = 0 +18.36 * currentsmoker(x)
+# y = 0 +18.36x
+#
+#x =1, y =18.36
+#x = 0, y=0
+#
+# y = expectation[y|x] --> Conditional expectation
+#same as above conditional mean approach
+predx_lm <- predict(linRegModel, fram_cp2[is.na(fram$cigsPerDay), ])
+
+predx_lm
+
+fram_cp2$cigsPerDay[is.na(fram_cp2$cigsPerDay)] <- predx_lm
+summary(fram_cp2$cigsPerDay)
+
+all(fram_cp2$cigsPerDay == fram_rpart$cigsPerDay)
+#interesting
+predx
+predx_lm
 
 #=======================================================================================================
 #7. OUTLIERS - OUTLIERS IDENTIFICATION
