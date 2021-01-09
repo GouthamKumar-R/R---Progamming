@@ -149,6 +149,9 @@ median(fram_median$cigsPerDay) #will return NA/ coz its nt py
 
 fram_median$cigsPerDay[is.na(fram_median$cigsPerDay)] = median(fram_median$cigsPerDay[!is.na(fram_median$cigsPerDay)])
 
+#shorter solution
+fram_median$cigsPerDay[which(is.na(fram_median$cigsPerDay))] = median(fram_median$cigsPerDay, na.rm = TRUE)
+
 summary(fram_median)
 hist(fram_median$cigsPerDay)
 #---------------------------------------------------------------
@@ -260,6 +263,59 @@ all(fram_cp2$cigsPerDay == fram_rpart$cigsPerDay)
 #interesting
 predx
 predx_lm
+
+
+##Mice imputation
+install.packages("mice")
+
+library(mice)
+
+setwd("C:\\Users\\Goutham-ROG\\Documents\\1-Codes\\R\\I2R class codes")
+fram <- read.csv("framingham.csv")
+
+fram_mice <- fram
+
+?mice
+
+methods(mice)
+
+summary(fram_mice)
+
+#education is a ordinal variable -> change to factor   -> rf imputation
+#cigsPerDay is a numerical variable   -> linear reg (mice.impute.norm.predict)
+#BPMeds is a categorical variable -> change to factor   -> logistic reg
+#totChol numeric   -> pmm - > Predictive Mean Matching 
+#BMI numeric   -> Predictive Mean Matching
+#heartRate numeric --> Predictive Mean Matching
+#glucose numeric  -> right skewed  -> linear reg (mice.impute.norm.predict)
+
+hist(fram_mice$totChol)
+
+fram_mice$education <-as.factor(fram_mice$education)
+
+fram_mice$BPMeds <- as.factor(fram_mice$BPMeds)
+
+summary(fram_mice)
+
+#lets begin with mice imputation
+my_mice = mice(data = fram_mice, m=5, method = c("","","rf","","norm.predict","logreg","",
+                                                 "","","pmm","","","pmm",
+                                                 "pmm","norm.predict",""), maxit = 20)
+
+my_mice$imp # m=5 so 5 df will be created, check for particular mean, and see if u wanna pick that
+
+summary(fram_mice$BMI)
+
+my_mice$imp$BMI #here see which df has mean close to 25, and which varies very less from this mean
+#seems like 3 and 5 are close to our mean
+
+final_fram = complete(my_mice, 3)
+
+View(final_fram)
+
+summary(final_fram)
+summary(fram)
+
 
 #=======================================================================================================
 #7. OUTLIERS - OUTLIERS IDENTIFICATION
