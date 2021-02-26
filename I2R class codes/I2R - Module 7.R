@@ -36,7 +36,7 @@ paste("All praise the King!!", "Goutham")
 a <- "apple"
 b <- "Ball"
 paste(a,b)
-paste(a,b,sep ="") #now separtor is given a null value
+paste(a,b,sep ="") #now separator is given a null value
 
 #for loop + paste
 for(i in c("Goutham", "Cr7", "Messi"))
@@ -104,7 +104,7 @@ names(avg) <- names(Boston)
 
 avg
 #now it's a vector which has names to it,
-#we can subset this vector and retrive dat using subset or names
+#we can subset this vector and retrive data using subset or names
 
 avg[3]
 avg["indus"]
@@ -148,7 +148,7 @@ hist(Boston[,9], main=paste("Histogram of",names(Boston)[9]),
 #main -> title
 #xlab -> xlabel
 
-#let's generate teh graphs for the enitre ds
+#let's generate the graphs for the entire ds
 for(i in 1:ncol(Boston))
 {
   hist(Boston[,i], main=paste("Histogram of",names(Boston)[i]),
@@ -391,6 +391,8 @@ setwd(path)
 getwd()
 
 cars <- read.csv("cars.csv")
+attr <- read.csv("attrition_modified.csv")
+
 #lets paste our o/p graphs in new folder 
 x<-readline()
 path<-gsub("\\\\","/",x)
@@ -403,9 +405,9 @@ xxx <- function(df)
 {
   for(i in 1:ncol(df))
   {
-    if(is.numeric(i))
+    if(is.numeric(df[,i]))
     {
-      #print(names(df)[i])
+      png(paste(names(df)[i],".png",sep=""))
       
       par(mfrow=c(2,1))
       #Boxplots
@@ -419,10 +421,48 @@ xxx <- function(df)
       hist(df[,i],main="",
            col="Blue",
            xlab=names(df)[i])
+      dev.off()
       
     }
+    if(is.factor(df[,i]))
+    {
+      png(paste(names(df)[i],".png",sep=""))
+      
+      barplot(table(df[,i]), main=paste("Barplot for",names(df)[i]),
+              col="Blue",
+              border="Red")
+      dev.off()
+    if(is.character(df[,i]))
+    {
+     stop("Please convert character to factor")
+    }
+    }
   }
-}
+} 
 
 xxx(mtcars)
+
+str(cars)
+
+cars["Origin"]<-as.factor(cars[,9])
+cars["Model"]<-as.factor(cars[,8])
+cars["Cylinders"]<-as.factor(cars[,3])
+
+
 xxx(cars)
+
+df <- attrition[, c('Age','Attrition','BusinessTravel','Department','MonthlyIncome','Gender','MaritalStatus','YearsAtCompany')]
+View(df)
+
+
+#change those datatypes
+df["BusinessTravel"]<-as.factor(df[,3])
+df["Department"]<-as.factor(df[,4])
+df["Gender"]<-as.factor(df[,6])
+df["MaritalStatus"]<-as.factor(df[,7])
+df["Attrition"]<-as.factor(df[,2])
+
+Graph_main(df)
+str(df)
+xxx(df)
+
